@@ -30,6 +30,16 @@ app.get("/jokes", (req, res) => {
 });
 
 //4. POST a new joke
+app.post("/jokes", (req, res) => {
+  const newJoke = req.body;
+  const newJokeId = jokes.length + 1;
+  const joke = {
+    id: newJokeId,
+    jokeText: newJoke.jokeText,
+    jokeType: newJoke.jokeType,
+  };
+  jokes.push(joke);
+});
 
 //5. PUT a joke
 
