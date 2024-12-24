@@ -67,6 +67,11 @@ app.delete("/jokes/:id", (req, res) => {
 });
 
 //8. DELETE All jokes
+app.delete("/jokes", (req, res) => {
+  const jokes = [];
+  res.json(jokes);
+  jokes.splice(jokes);
+});
 
 app.listen(port, () => {
   console.log(`Successfully started server on port ${port}.`);
