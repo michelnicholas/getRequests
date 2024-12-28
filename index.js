@@ -72,10 +72,14 @@ app.delete("/jokes/:id", (req, res) => {
 });
 
 //8. DELETE All jokes
-app.delete("/jokes", (req, res) => {
-  const jokes = [];
-  res.json(jokes);
-  jokes.splice(jokes);
+app.delete("/all", (req, res) => {
+  const userKey = req.query;
+  if (userKey.key === masterKey) {
+    jokes = [];
+    res.sendStatus(200);
+  } else {
+    res.status(404).json({ error: "Invalid Key" });
+  }
 });
 
 app.listen(port, () => {
