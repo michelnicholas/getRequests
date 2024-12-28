@@ -52,11 +52,15 @@ app.put("/jokes/:id", (req, res) => {
 //6. PATCH a joke
 app.patch("/jokes/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const updatedJoke = req.body;
-  const joke = jokes.findIndex((joke) => {
-    joke.id == id;
-  });
-  joke[joke] = updatedJoke;
+  const existingJoke = jokes.find((joke) => joke.id === id);
+  const replacementJoke = {
+    id: id,
+    jokeText: req.body.jokeText || existingJoke.jokeText,
+    jokeType: req.body.jokeType || existingJoke.jokeType,
+  };
+  const searchIndex = jokes.findIndex((joke) => joke.id === id);
+  jokes[searchIndex] = replacementJoke;
+  res.json(replacementJoke);
 });
 
 //7. DELETE Specific joke
@@ -64,6 +68,7 @@ app.delete("/jokes/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const jokeIndex = jokes.findIndex((joke) => joke.id === id);
   jokes.splice(jokeIndex, 1);
+  res.sendStatus(200);
 });
 
 //8. DELETE All jokes
